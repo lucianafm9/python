@@ -60,12 +60,12 @@ def filtro():
     PressKey("down")
     time.sleep(5)
     tab(2)
-    #Type(DATA_INCIO_FILTRO_TEXTO, interval_seconds=0.01)
-    Type("24/06/2019", interval_seconds=0.01)
+    Type(DATA_INCIO_FILTRO_TEXTO, interval_seconds=0.01)
+    #Type("24/06/2019", interval_seconds=0.01)
     time.sleep(0.4)
     tab(2)
-    #Type(DATA_FIM_FILTRO_TEXTO, interval_seconds=0.01)
-    Type("30/06/2019", interval_seconds=0.01)
+    Type(DATA_FIM_FILTRO_TEXTO, interval_seconds=0.01)
+    #Type("30/06/2019", interval_seconds=0.01)
     tab(6)
     Enter()
 
@@ -124,7 +124,21 @@ def principal():
         login()
         filtro()
         if(existeresult() == 1):
-            shifttab(6)
+            selectodos()
+            #tab(19) #fazer laço para preencher os dados
+            tab(70)
+            PressKey("enter")
+            tab(73)
+            PressKey("enter")
+        else:
+            print("nao existe resultado")
+
+# -------------------------------------------------
+# Seleciona todos
+# -------------------------------------------------
+def selectodos():
+    shifttab(9)  # cair no selecionar todos
+    PressKey("space")
 
 # -------------------------------------------------
 # Verifica se retornou resultado na busca. Se retornou dados na busca, vai retornar 1, caso contrário retornará 2
