@@ -61,11 +61,9 @@ def filtro():
     time.sleep(5)
     tab(2)
     Type(DATA_INCIO_FILTRO_TEXTO, interval_seconds=0.01)
-    #Type("24/06/2019", interval_seconds=0.01)
     time.sleep(0.4)
     tab(2)
     Type(DATA_FIM_FILTRO_TEXTO, interval_seconds=0.01)
-    #Type("30/06/2019", interval_seconds=0.01)
     tab(6)
     Enter()
 
@@ -125,7 +123,6 @@ def principal():
         filtro()
         if(existeresult() == 1):
             selectodos()
-            #tab(19) #fazer laço para preencher os dados
             tab(70)
             PressKey("enter")
             tab(73)
@@ -144,7 +141,7 @@ def selectodos():
 # Verifica se retornou resultado na busca. Se retornou dados na busca, vai retornar 1, caso contrário retornará 2
 # -------------------------------------------------
 def existeresult():
-    time.sleep(120)
+    time.sleep(300) #aguarda 5min para o resultado da pesquisa aparecer
     tab(26)
     PressHotkey("ctrl", "c")
     win32clipboard.OpenClipboard()
@@ -154,17 +151,47 @@ def existeresult():
     else:
         return 2
 
+def escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso):
+    Type(valor_totalctrc, interval_seconds=0.01)
+    tab(1)
+    Type(numero_ctrc, interval_seconds=0.01)
+    tab(1)
+    Type(data_ctrc, interval_seconds=0.01)
+    tab(2)
+    Type(chave_acesso, interval_seconds=0.01)
+
+def mudarpagina(qtdpagina):
+    if(qtdpagina == 1):
+        tab(2)
+    else:
+        tab(5)
+    PressKey("enter")
+
+def confirmar():
+    tab(8)
+    PressKey("enter")
+
+
+
 def arquivo():
-    if(existearq()):
-        browser = access()
-        if browser:
-            login()
+    browser = access()
+    if browser:
+        login()
+    while True:
+        if(existearq()):
             filtro()
             if(existeresult() == 1):
+                selectodos()
                 sheet = abrirarq()
                 wb = workbook()
                 qtdtotalrows = qttotallinhas(sheet)
+                qtdlinhaspag = 1
+                qtdpagina = 1
                 for i in range(qtdtotalrows):
+                    if(qtdlinhaspag == 1):
+                        tab(19)
+                    else:
+                        tab(1)
                     valor_totalctrc = 0
                     numero_ctrc = ""
                     data_ctrc = ""
@@ -181,9 +208,19 @@ def arquivo():
                         chave_acesso = lercelula(sheet, i, 3)
                     year, month, day, hour, minute, second = lerceluladata(data_ctrc, wb)
                     data_ctrc = ("0" + str(day))[-2:] + '/' + ("0" + str(month))[-2:] + '/' + str(year)
-                    #print(str(valor_totalctrc) + "_" + numero_ctrc + "_" + data_ctrc + "_" + str(chave_acesso))
+                    escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso)
+                    if(qtdlinhaspag == 10):
+                        if (i < (qtdtotalrows - 1)):
+                            mudarpagina(qtdpagina)
+                            qtdpagina = qtdpagina + 1
+                        else:
+                            confirmar()
+                        qtdlinhaspag = 1
+                    else:
+                        qtdlinhaspag = qtdlinhaspag + 1
+            #mudar o nome do arquivo que acabei de ler para que o script não leia novamente.
+        time.sleep(1800) #repete a cada 30min para verificar se possui
 
-principal()
+#principal()
 
-#arquivo()
-#
+arquivo()
