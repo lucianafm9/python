@@ -131,8 +131,8 @@ def selectodos():
 # Verifica se retornou resultado na busca. Se retornou dados na busca, vai retornar 1, caso contrário retornará 2
 # -------------------------------------------------
 def existeresult():
-    time.sleep(100)
-    #time.sleep(300) #aguarda 5min para o resultado da pesquisa aparecer
+    #time.sleep(100)
+    time.sleep(300) #aguarda 5min para o resultado da pesquisa aparecer
     tab(26)
     PressHotkey("ctrl", "c")
     win32clipboard.OpenClipboard()
