@@ -63,9 +63,11 @@ def filtro():
     time.sleep(5)
     tab(2)
     Type(DATA_INCIO_FILTRO_TEXTO, interval_seconds=0.01)
+    #Type("01/07/2019", interval_seconds=0.01)
     time.sleep(0.4)
     tab(2)
     Type(DATA_FIM_FILTRO_TEXTO, interval_seconds=0.01)
+    #Type("07/07/2019", interval_seconds=0.01)
     tab(6)
     Enter()
 
@@ -141,6 +143,7 @@ def existeresult():
         return 2
 
 def escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso):
+    time.sleep(0.4)
     Type(str(valor_totalctrc), interval_seconds=0.01)
     tab(1)
     Type(str(numero_ctrc), interval_seconds=0.01)
@@ -150,11 +153,26 @@ def escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso):
     Type(str(chave_acesso), interval_seconds=0.01)
 
 def mudarpagina(qtdpagina):
+    time.sleep(0.4)
+    #
     if(qtdpagina == 1):
-        tab(2)#2 ou 3
+        tab(1)
+        time.sleep(0.4)
+        tab(1)
+        time.sleep(0.4)
     else:
-        tab(5)
+        tab(1)
+        time.sleep(0.4)
+        tab(1)
+        time.sleep(0.4)
+        tab(1)
+        time.sleep(0.4)
+        tab(1)
+        time.sleep(0.4)
+        tab(1)
+        time.sleep(0.4)
     PressKey("enter")
+    time.sleep(0.4)
 
 def confirmar():
     tab(8)
@@ -204,18 +222,20 @@ def arquivo():
                                 chave_acesso = lercelula(sheet, i, 3)
                             year, month, day, hour, minute, second = lerceluladata(data_ctrc, wb)
                             data_ctrc = ("0" + str(day))[-2:] + '/' + ("0" + str(month))[-2:] + '/' + str(year)
+                            time.sleep(2)
                             escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso)
                             if(qtdlinhaspag == 10):
                                 if (i < (qtdtotalrows - 1)):
                                     mudarpagina(qtdpagina)
                                     qtdpagina = qtdpagina + 1
+                                    qtdlinhaspag = qtdlinhaspag + 1
                                 else:
                                     teste = "na homologação, comentar essa linha e descomentar a linha confirmar()"
                                     #confirmar()
                                 qtdlinhaspag = 1
                             else:
                                 qtdlinhaspag = qtdlinhaspag + 1
-                    moverarq()
+                        moverarq()
                 browser.kill()
                 time.sleep(1800) #repete a cada 30min para verificar se possui
         except Exception as e:
