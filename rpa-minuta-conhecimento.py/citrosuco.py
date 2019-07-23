@@ -56,18 +56,19 @@ def login():
 # Filtro e realizando a busca no portal
 # -------------------------------------------------
 def filtro():
-    time.sleep(4)
-    tab(12)
+    time.sleep(30)
+    #tab(12) #essa linha foi comentada devido ao teste de selecionar apenas os abertos. assim a linha abaixo foi fixada para o restante do programa executar normalmente.
+    tab(8)
     PressKey("down")
     PressKey("down")
     time.sleep(5)
     tab(2)
-    Type(DATA_INCIO_FILTRO_TEXTO, interval_seconds=0.01)
-    #Type("01/07/2019", interval_seconds=0.01)
+    #Type(DATA_INCIO_FILTRO_TEXTO, interval_seconds=0.01)
+    Type("08/07/2019", interval_seconds=0.01)
     time.sleep(0.4)
     tab(2)
-    Type(DATA_FIM_FILTRO_TEXTO, interval_seconds=0.01)
-    #Type("07/07/2019", interval_seconds=0.01)
+    #Type(DATA_FIM_FILTRO_TEXTO, interval_seconds=0.01)
+    Type("14/07/2019", interval_seconds=0.01)
     tab(6)
     Enter()
 
@@ -126,20 +127,24 @@ def qttotallinhas(sheet):
 def selectodos():
     shifttab(9)  # cair no selecionar todos
     PressKey("space")
+    time.sleep(5)
 
 # -------------------------------------------------
 # Verifica se retornou resultado na busca. Se retornou dados na busca, vai retornar 1, caso contrário retornará 2
 # -------------------------------------------------
 def existeresult():
-    #time.sleep(100)
-    time.sleep(300) #aguarda 5min para o resultado da pesquisa aparecer
-    tab(26)
-    PressHotkey("ctrl", "c")
-    win32clipboard.OpenClipboard()
-    dado_copiado = win32clipboard.GetClipboardData()
-    if "https://www5.citrosuco.com.br:50001/irj/portal" not in dado_copiado:
-        return 1
-    else:
+    try:
+        #time.sleep(100)
+        time.sleep(300) #aguarda 5min para o resultado da pesquisa aparecer
+        tab(26)
+        PressHotkey("ctrl", "c")
+        win32clipboard.OpenClipboard()
+        dado_copiado = win32clipboard.GetClipboardData()
+        if "https://www5.citrosuco.com.br:50001/irj/portal" not in dado_copiado:
+            return 1
+        else:
+            return 2
+    except Exception as e:
         return 2
 
 def escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso):
@@ -160,7 +165,11 @@ def mudarpagina(qtdpagina):
         time.sleep(0.4)
         tab(1)
         time.sleep(0.4)
+        tab(1)
+        time.sleep(0.4)
     else:
+        tab(1)
+        time.sleep(0.4)
         tab(1)
         time.sleep(0.4)
         tab(1)
@@ -176,6 +185,7 @@ def mudarpagina(qtdpagina):
 
 def confirmar():
     tab(8)
+    time.sleep(0.4)
     PressKey("enter")
 
 def moverarq():
@@ -230,8 +240,9 @@ def arquivo():
                                     qtdpagina = qtdpagina + 1
                                     qtdlinhaspag = qtdlinhaspag + 1
                                 else:
-                                    teste = "na homologação, comentar essa linha e descomentar a linha confirmar()"
-                                    #confirmar()
+                                    #teste = "na homologação, comentar essa linha e descomentar a linha confirmar()"
+                                    confirmar()
+                                    break
                                 qtdlinhaspag = 1
                             else:
                                 qtdlinhaspag = qtdlinhaspag + 1
