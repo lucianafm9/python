@@ -57,18 +57,18 @@ def login():
 # -------------------------------------------------
 def filtro():
     time.sleep(30)
-    #tab(12) #essa linha foi comentada devido ao teste de selecionar apenas os abertos. assim a linha abaixo foi fixada para o restante do programa executar normalmente.
-    tab(8)
+    tab(12)
+    #tab(8) #esta linha foi criada para ter um teste apenas com o status aberto. como não será utilizada mais, está comentada.
     PressKey("down")
     PressKey("down")
     time.sleep(5)
     tab(2)
-    #Type(DATA_INCIO_FILTRO_TEXTO, interval_seconds=0.01)
-    Type("08/07/2019", interval_seconds=0.01)
+    Type(DATA_INCIO_FILTRO_TEXTO, interval_seconds=0.01)
+    #Type("08/07/2019", interval_seconds=0.01)
     time.sleep(0.4)
     tab(2)
-    #Type(DATA_FIM_FILTRO_TEXTO, interval_seconds=0.01)
-    Type("14/07/2019", interval_seconds=0.01)
+    Type(DATA_FIM_FILTRO_TEXTO, interval_seconds=0.01)
+    #Type("14/07/2019", interval_seconds=0.01)
     tab(6)
     Enter()
 
@@ -145,7 +145,7 @@ def existeresult():
         else:
             return 2
     except Exception as e:
-        return 2
+        return 1
 
 def escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso):
     time.sleep(0.4)
@@ -184,9 +184,10 @@ def mudarpagina(qtdpagina):
     time.sleep(0.4)
 
 def confirmar():
-    tab(8)
+    tab(5)
     time.sleep(0.4)
     PressKey("enter")
+    time.sleep(120)
 
 def moverarq():
     for oldname in os.listdir(CAMINHO_EXCEL):
@@ -233,9 +234,10 @@ def arquivo():
                             year, month, day, hour, minute, second = lerceluladata(data_ctrc, wb)
                             data_ctrc = ("0" + str(day))[-2:] + '/' + ("0" + str(month))[-2:] + '/' + str(year)
                             time.sleep(2)
+                            valor_totalctrc = str(valor_totalctrc).replace('.',',')
                             escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso)
                             if(qtdlinhaspag == 10):
-                                if (i < (qtdtotalrows - 1)):
+                                if (i < (qtdtotalrows - 2)):
                                     mudarpagina(qtdpagina)
                                     qtdpagina = qtdpagina + 1
                                     qtdlinhaspag = qtdlinhaspag + 1
@@ -251,5 +253,7 @@ def arquivo():
                 time.sleep(1800) #repete a cada 30min para verificar se possui
         except Exception as e:
             print("Erro durante o processo: " + str(e))
+            browser.kill()
+            time.sleep(1800)  # repete a cada 30min para verificar se possui
 
 arquivo()
