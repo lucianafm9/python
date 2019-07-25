@@ -197,6 +197,11 @@ def moverarq():
             newname = os.path.join(CAMINHO_EXCEL_PROCESSADOS, newname)
             os.rename(oldname, newname)
 
+def pularlinhas(moddez):
+    qtdlinhaspular = 10-moddez
+    qtdtabs = qtdlinhaspular * 5
+    tab(qtdtabs)
+
 def arquivo():
     while True:
         try:
@@ -212,6 +217,9 @@ def arquivo():
                         qtdtotalrows = qttotallinhas(sheet)
                         qtdlinhaspag = 1
                         qtdpagina = 1
+                        resultintdez = qtdtotalrows // 10
+                        moddez = qtdtotalrows%10
+                        puloulinha = 0
                         for i in range(qtdtotalrows):
                             if(qtdlinhaspag == 1):
                                 tab(19)
@@ -235,6 +243,10 @@ def arquivo():
                             data_ctrc = ("0" + str(day))[-2:] + '/' + ("0" + str(month))[-2:] + '/' + str(year)
                             time.sleep(2)
                             valor_totalctrc = str(valor_totalctrc).replace('.',',')
+                            if(i > (resultintdez * 10)):
+                                if(puloulinha == 0):
+                                    pularlinhas(moddez)
+                                    puloulinha = 1 #pois ele precisa pular as linhas preenchidas somente uma vez na última página
                             escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso)
                             if(qtdlinhaspag == 10):
                                 if (i < (qtdtotalrows - 2)):
