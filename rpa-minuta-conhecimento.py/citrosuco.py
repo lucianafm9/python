@@ -149,13 +149,13 @@ def existeresult():
 
 def escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso):
     time.sleep(0.4)
-    Type(str(valor_totalctrc), interval_seconds=0.01)
+    Type(str(valor_totalctrc), interval_seconds=0.04)
     tab(1)
-    Type(str(numero_ctrc), interval_seconds=0.01)
+    Type(str(numero_ctrc), interval_seconds=0.04)
     tab(1)
-    Type(str(data_ctrc), interval_seconds=0.01)
+    Type(str(data_ctrc), interval_seconds=0.04)
     tab(2)
-    Type(str(chave_acesso), interval_seconds=0.01)
+    Type(str(chave_acesso), interval_seconds=0.04)
 
 def mudarpagina(qtdpagina):
     time.sleep(0.4)
@@ -181,7 +181,7 @@ def mudarpagina(qtdpagina):
         tab(1)
         time.sleep(0.4)
     PressKey("enter")
-    time.sleep(0.4)
+    time.sleep(5)
 
 def confirmar():
     tab(5)
