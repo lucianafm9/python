@@ -57,8 +57,8 @@ def login():
 # -------------------------------------------------
 def filtro():
     time.sleep(30)
-    tab(12)
-    #tab(8) #esta linha foi criada para ter um teste apenas com o status aberto. como não será utilizada mais, está comentada.
+    #tab(12)
+    tab(8)
     PressKey("down")
     PressKey("down")
     time.sleep(5)
@@ -134,8 +134,8 @@ def selectodos():
 # -------------------------------------------------
 def existeresult():
     try:
-        #time.sleep(100)
-        time.sleep(300) #aguarda 5min para o resultado da pesquisa aparecer
+        time.sleep(120)
+        #time.sleep(300) #aguarda 5min para o resultado da pesquisa aparecer
         tab(26)
         PressHotkey("ctrl", "c")
         win32clipboard.OpenClipboard()
@@ -184,7 +184,7 @@ def mudarpagina(qtdpagina):
     time.sleep(5)
 
 def confirmar():
-    tab(5)
+    tab(4)
     time.sleep(0.4)
     PressKey("enter")
     time.sleep(120)
@@ -218,8 +218,10 @@ def arquivo():
                         qtdlinhaspag = 1
                         qtdpagina = 1
                         resultintdez = qtdtotalrows // 10
-                        moddez = qtdtotalrows%10
+                        moddez = (qtdtotalrows % 10) - 1
                         puloulinha = 0
+                        if(moddez <= 0):
+                            puloulinha = 1
                         for i in range(qtdtotalrows):
                             if(qtdlinhaspag == 1):
                                 tab(19)
@@ -243,11 +245,14 @@ def arquivo():
                             data_ctrc = ("0" + str(day))[-2:] + '/' + ("0" + str(month))[-2:] + '/' + str(year)
                             time.sleep(2)
                             valor_totalctrc = str(valor_totalctrc).replace('.',',')
-                            if(i > (resultintdez * 10)):
+                            if((i+1) > (resultintdez * 10)):
                                 if(puloulinha == 0):
                                     pularlinhas(moddez)
                                     puloulinha = 1 #pois ele precisa pular as linhas preenchidas somente uma vez na última página
                             escrevelinha(valor_totalctrc, numero_ctrc, data_ctrc, chave_acesso)
+                            if((i+1) == qtdtotalrows):
+                                confirmar()
+                                break
                             if(qtdlinhaspag == 10):
                                 if (i < (qtdtotalrows - 2)):
                                     mudarpagina(qtdpagina)
